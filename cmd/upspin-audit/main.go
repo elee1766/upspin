@@ -54,18 +54,18 @@ The subcommands are:
 
   scan-dir
   scan-store
-  	Scan the directory and store servers, creating a list of blocks
-  	each uses, and report the total storage held by those blocks.
-  
+		Scan the directory and store servers, creating a list of blocks
+		each uses, and report the total storage held by those blocks.
+
   find-garbage
 	Use the results of scan-dir and scan-store operations to create a list
 	of blocks that are present in a store server but not referenced by the
 	scanned directory servers. It also creates a list of blocks that are
 	referenced by the scanned directory servers but not present in the
 	store server.
-  
+
   delete-garbage
-  	Delete the blocks found by find-garbage from the store server.
+		Delete the blocks found by find-garbage from the store server.
 
 To delete the garbage references in a given store server:
 
@@ -124,7 +124,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, help)
+	fmt.Fprint(os.Stderr, help)
 	fmt.Fprintln(os.Stderr, "Usage of upspin audit:")
 	fmt.Fprintln(os.Stderr, "\tupspin [globalflags] audit <command> [flags] ...")
 	fmt.Fprintln(os.Stderr, "Commands: scan-dir, scan-store, find-garbage, delete-garbage")

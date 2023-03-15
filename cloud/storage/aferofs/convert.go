@@ -2,20 +2,24 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+//go:build ignore
 // +build ignore
 
-// The convert command is a tool to convert a local file tree used for on-disk
-// storage, as constructed by cloud/storage/disk, from the old file name mapping
+// The convert command is a tool to convert a local file tree used for on-aferofs
+// storage, as constructed by cloud/storage/aferofs, from the old file name mapping
 // to the new.
 // Run it like this:
+//
 //	go run convert.go -old OLDTREE -new NEWTREE
-// where OLDTREE is the base of an existing storage tree as created by disk.New
+//
+// where OLDTREE is the base of an existing storage tree as created by aferofs.New
 // using the old path encoding, and NEWTREE is an empty (or to-be-created) tree
 // where the data will be written using the new encoding. OLDTREE and NEWTREE
 // must be distinct directories.
 //
 // For details about the encodings see
-//	upspin.io/cloud/storage/disk/internal/local/path.go.
+//
+//	upspin.io/cloud/storage/aferofs/internal/local/path.go.
 package main
 
 import (
@@ -28,7 +32,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"upspin.io/cloud/storage/disk/internal/local"
+	"upspin.io/cloud/storage/aferofs/internal/local"
 )
 
 var (

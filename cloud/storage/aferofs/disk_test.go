@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package disk
+package aferofs
 
 import (
 	"fmt"
@@ -11,19 +11,21 @@ import (
 	"os"
 	"testing"
 
+	"github.com/spf13/afero"
 	"upspin.io/cloud/storage"
 	"upspin.io/upspin"
 )
 
 func TestList(t *testing.T) {
-	base, err := ioutil.TempDir("", "upspin-storage-disk-test")
+	base, err := ioutil.TempDir("", "upspin-storage-aferofs-test")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer os.RemoveAll(base)
 
-	opts := &storage.Opts{Opts: map[string]string{"basePath": base}}
-	store, err := New(opts)
+	opts := &storage.Opts{Opts: map[string]string{}}
+	fs := afero.NewBasePathFs(afero.NewOsFs(), base)
+	store, err := NewDialer(fs)(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -45,10 +47,12 @@ func TestList(t *testing.T) {
 		t.Errorf("list of empty bucket returned non-empty page token %q", next)
 	}
 
-	maxRefsPerCall := 1000
 	// Test pagination by reducing the results per page.
+	oldMaxRefsPerCall := maxRefsPerCall
+	defer func() { maxRefsPerCall = oldMaxRefsPerCall }()
+	maxRefsPerCall = 5
 
-	const nFiles = 8000 // Must be evenly divisible by maxRefsPerCall.
+	const nFiles = 100 // Must be evenly divisible by maxRefsPerCall.
 	pages := nFiles / maxRefsPerCall
 
 	// Add some files.

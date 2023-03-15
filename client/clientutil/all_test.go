@@ -49,10 +49,10 @@ func TestReadAll(t *testing.T) {
 		locWithContent: tLocs[9],
 		content:        []byte("found it!"),
 		locRedirection: map[upspin.Reference][]upspin.Location{
-			tLocs[0].Reference: []upspin.Location{tLocs[1], tLocs[2], tLocs[3]},
-			tLocs[3].Reference: []upspin.Location{tLocs[4], tLocs[2], tLocs[5]},
-			tLocs[5].Reference: []upspin.Location{tLocs[6], tLocs[7], tLocs[8]},
-			tLocs[8].Reference: []upspin.Location{tLocs[9]},
+			tLocs[0].Reference: {tLocs[1], tLocs[2], tLocs[3]},
+			tLocs[3].Reference: {tLocs[4], tLocs[2], tLocs[5]},
+			tLocs[5].Reference: {tLocs[6], tLocs[7], tLocs[8]},
+			tLocs[8].Reference: {tLocs[9]},
 		},
 	}
 	err := bind.RegisterStoreServer(upspin.InProcess, store)
@@ -126,7 +126,7 @@ func setupTestConfig(t *testing.T) upspin.Config {
 	for i := 0; i < 10; i++ {
 		loc := upspin.Location{
 			Endpoint:  inProcess,
-			Reference: upspin.Reference("ref" + string(i)),
+			Reference: upspin.Reference("ref" + string(rune(i))),
 		}
 		tLocs = append(tLocs, loc)
 	}
