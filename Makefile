@@ -2,7 +2,7 @@
 
 INSTALL_DIR := ~/.local/bin
 
-APPS=cacheserver dirserver frontend keyserver storeserver upspin upspin-audit upspinfs upspinserver
+APPS=cacheserver dirserver frontend keyserver storeserver upspin upspin-audit upspinfs upspinserver upspin-gateway
 
 build: tidy
 	mkdir -p build
